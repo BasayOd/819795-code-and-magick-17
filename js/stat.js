@@ -28,11 +28,11 @@ var renderText = function (ctx, str, x, y) {
   ctx.fillStyle = 'black';
   ctx.fillText(str, x, y);
 };
-var getRandomInt = function (x) {
-  return Math.random() * x;
+var getRandomInt = function (min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-var getColor = function (x, y, c, d) {
-  return 'rgba(' + x + ', ' + y + ', ' + c + ', ' + d + ')';
+var getColor = function (r, g, b, a) {
+  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
 };
 var renderSingleBar = function (ctx, x, y, width, height, names, times, maxTime, i) {
   renderText(ctx, Math.floor(times[i]), CLOUD_X + 2 * TEXT_GAP + i * (COLUMN_SPACE + COLUMN_WIDTH),
@@ -40,7 +40,7 @@ var renderSingleBar = function (ctx, x, y, width, height, names, times, maxTime,
   if (names[i] === 'Вы') {
     ctx.fillStyle = getColor(255, 0, 0, 1);
   } else {
-    ctx.fillStyle = getColor(getRandomInt(255), getRandomInt(255), 255, 1);
+    ctx.fillStyle = getColor(getRandomInt(0, 255), getRandomInt(0, 255), 255, 1);
   }
   ctx.fillRect(x, y, width, height);
   renderText(ctx, names[i], CLOUD_X + 2 * TEXT_GAP + i * (COLUMN_SPACE + COLUMN_WIDTH), CLOUD_HEIGHT - GAP);
