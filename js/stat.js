@@ -34,17 +34,20 @@ var getRandomInt = function (min, max) {
 var getColor = function (r, g, b, a) {
   return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
 };
+var getBarColor = function (name) {
+  var barColor = 'rgba(255, 0, 0, 1)';
+  if (name !== 'Вы') {
+    barColor = getColor(getRandomInt(0, 255), getRandomInt(0, 255), 255, 1);
+  }
+  return barColor;
+};
 var renderSingleBar = function (ctx, x, y, width, height, names, times, maxTime, i) {
-  renderText(ctx, 
+  renderText(ctx,
       Math.floor(times[i]),
       CLOUD_X + 2 * TEXT_GAP + i * (COLUMN_SPACE + COLUMN_WIDTH),
       CLOUD_HEIGHT - 4 * GAP - times[i] / maxTime * columnHeight
   );
-  if (names[i] === 'Вы') {
-    ctx.fillStyle = getColor(255, 0, 0, 1);
-  } else {
-    ctx.fillStyle = getColor(getRandomInt(0, 255), getRandomInt(0, 255), 255, 1);
-  }
+  ctx.fillStyle = getBarColor(names[i]);
   ctx.fillRect(x, y, width, height);
   renderText(ctx,
       names[i],
