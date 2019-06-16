@@ -61,16 +61,16 @@ window.renderStatistics = function (ctx, names, times) {
   renderText(ctx,
       'Ура вы победили!',
       CLOUD_X + TEXT_GAP,
-      TEXT_GAP * 2)
-  ;
+      TEXT_GAP * 2
+  );
   renderText(ctx, 'Список результатов:', CLOUD_X + TEXT_GAP, TEXT_GAP * 3);
   var maxTime = getMaxElement(times);
   for (var i = 0; i < names.length; i++) {
-    renderSingleBar(ctx, 
+    renderSingleBar(ctx,
         CLOUD_X + 2 * TEXT_GAP + i * (COLUMN_SPACE + COLUMN_WIDTH),
         CLOUD_HEIGHT - 3 * GAP - times[i] / maxTime * columnHeight,
         COLUMN_WIDTH,
-        times[i] / maxTime * columnHeight, 
+        times[i] / maxTime * columnHeight,
         names,
         times,
         maxTime,
