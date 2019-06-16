@@ -74,6 +74,7 @@ window.renderStatistics = function (ctx, names, times) {
         names,
         times,
         maxTime,
-        i);
+        i
+    );
   }
 };
