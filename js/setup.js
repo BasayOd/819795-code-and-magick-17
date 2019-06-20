@@ -38,5 +38,18 @@ var setupBlock = document.querySelector('.setup');
 setupBlock.classList.remove('hidden');
 document.querySelector('.setup-similar').classList.remove('hidden');
 
-var template = document.querySelector('#similar-wizard-template');
+var templateWizard = document.querySelector('#similar-wizard-template')
+.content.
+querySelector('.setup-similar-item');
+
+var similarListElement = document.querySelector('.setup-similar-list');
+var fragment = document.createDocumentFragment();
+for (var i = 0; i < wizards.length; i++) {
+  var wizardElement = templateWizard.cloneNode(true);
+  wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
+  wizardElement.querySelector('.wizard-coat').style.fill = wizards[i].coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizards[i].eyesColor;
+  fragment.appendChild(wizardElement);
+}
+similarListElement.appendChild(fragment);
 
