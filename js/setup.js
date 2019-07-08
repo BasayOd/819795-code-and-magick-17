@@ -22,8 +22,12 @@ var createWizard = function () {
 };
 var wizards = [createWizard(), createWizard(), createWizard(), createWizard()];
 
-var removeHidden = function (str) {
+var openWindow = function (str) {
   document.querySelector(str).classList.remove('hidden');
+};
+
+var closeWindow = function (str) {
+  document.querySelector(str).classList.add('hidden');
 };
 
 var addWizardsToFragment = function () {
@@ -35,14 +39,53 @@ var addWizardsToFragment = function () {
     fragment.appendChild(wizardElement);
   }
 };
-removeHidden('.setup');
+var closeWindowByMouse = function (selector, click, window) {
+  document.querySelector(selector).addEventListener(click, function () {
+    closeWindow(window);
+  });
+};
+var openWindowByMouse = function (selector, click, window) {
+  document.querySelector(selector).addEventListener(click, function () {
+    openWindow(window);
+  });
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape' && document.activeElement.localName !== 'input') {
+      closeWindow(window);
+    }
+  });
 
+};
+// removeHidden('.setup');
 var templateWizard = document.querySelector('#similar-wizard-template')
 .content.
 querySelector('.setup-similar-item');
 
+
 var similarListElement = document.querySelector('.setup-similar-list');
 var fragment = document.createDocumentFragment();
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = document.querySelector('.setup-close');
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openWindow('.setup');
+  }
+});
 addWizardsToFragment();
 similarListElement.appendChild(fragment);
-removeHidden('.setup-similar');
+// removeHidden('.setup-similar');
+openWindowByMouse('.setup-open', 'click', '.setup');
+closeWindowByMouse('.setup-close', 'click', '.setup');
+setupClose.addEventListener('keydown ', function (evt) {
+  if (evt.key === 'Enter') {
+    closeWindow('.setup');
+  }
+});
+setup.querySelector('.setup-close').
+addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closeWindow('.setup');
+  }
+});
+
