@@ -12,6 +12,7 @@ var coatColors = ['rgb(101, 137, 164)',
   'rgb(215, 210, 55)',
   'rgb(0, 0, 0)'];
 var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var fireballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var createWizard = function () {
   var obj = {
     name: names[getRandomInt(0, names.length - 1)] + surnames[getRandomInt(0, names.length - 1)],
@@ -55,7 +56,6 @@ var openWindowByMouse = function (selector, click, window) {
   });
 
 };
-// removeHidden('.setup');
 var templateWizard = document.querySelector('#similar-wizard-template')
 .content.
 querySelector('.setup-similar-item');
@@ -66,7 +66,30 @@ var fragment = document.createDocumentFragment();
 var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = document.querySelector('.setup-close');
-
+var createEventListenerForSetupWizard = function (selector, array) {
+  document.querySelector('.setup-wizard').
+  querySelector(selector).addEventListener('click', function () {
+    changeElementOfWizard(selector, array);
+  });
+};
+var changeElementOfWizard = function (selector, array) { // тут меняем произвольно части волшебника
+  var randArrayElem = array[getRandomInt(0, array.length - 1)];
+  document.querySelector('.setup-wizard').
+  querySelector(selector).style.fill = randArrayElem;
+  if (selector === '.wizard-coat') {
+    document.querySelector('input[name=coat-color]').value = randArrayElem;
+  }
+  if (selector === '.wizard-eyes') {
+    document.querySelector('input[name=eyes-color]').value = randArrayElem;
+  }
+};
+var changeFireballByClick = function () {
+  document.querySelector('.setup-fireball-wrap').addEventListener('click', function () {
+    var fireballColor = fireballColors[getRandomInt(0, fireballColors.length - 1)];
+    document.querySelector('.setup-fireball-wrap').style.background = fireballColor;
+    document.querySelector('.setup-fireball-wrap').querySelector('input').value = fireballColor;
+  });
+};
 setupOpen.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
     openWindow('.setup');
@@ -74,7 +97,7 @@ setupOpen.addEventListener('keydown', function (evt) {
 });
 addWizardsToFragment();
 similarListElement.appendChild(fragment);
-// removeHidden('.setup-similar');
+openWindow('.setup-similar');
 openWindowByMouse('.setup-open', 'click', '.setup');
 closeWindowByMouse('.setup-close', 'click', '.setup');
 setupClose.addEventListener('keydown ', function (evt) {
@@ -88,4 +111,8 @@ addEventListener('keydown', function (evt) {
     closeWindow('.setup');
   }
 });
+createEventListenerForSetupWizard('.wizard-coat', coatColors);
+createEventListenerForSetupWizard('.wizard-eyes', eyesColors);
+changeFireballByClick();
+
 
